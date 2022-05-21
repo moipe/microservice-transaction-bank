@@ -23,7 +23,6 @@ public class Transaction {
 	
 	private Double amount;
 	
-	//@JsonIgnore
 	@JsonProperty(access = Access.WRITE_ONLY)
 	private String accountId;
 

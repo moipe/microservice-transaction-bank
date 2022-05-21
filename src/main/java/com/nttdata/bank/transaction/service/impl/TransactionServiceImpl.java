@@ -27,27 +27,12 @@ public class TransactionServiceImpl implements TransactionService{
 
 	@Override
 	public Mono<Transaction> findById(String id) {
-		return transactionRepository.findById(id);
+		return transactionRepository.findById(id)
+				.switchIfEmpty(Mono.error(new Exception("No existe una transacción con el id: " + id)));
 	}
 
 	@Override
 	public Mono<Transaction> save(Transaction transaction) {
-		/*return transactionRepository.save(transaction)
-					.flatMap(t -> {
-							Mono<Transaction> TransactionMono = Mono.empty();
-							if(t.getType().equals("Depósito")) {
-								accountClientRest.updateBalance(t.getAccountId(), t.getAmount(), "1").block();
-								TransactionMono = Mono.just(t);
-							}
-							if(t.getType().equals("Retiro")) {
-								
-								Account account = accountClientRest.updateBalance(t.getAccountId(), t.getAmount(), "2").block();
-								if(account != null) TransactionMono = Mono.just(t);
-							}
-
-							return TransactionMono;
-						});*/
-		
 		Mono<Transaction> oTransaction = Mono.just(transaction);
 		return oTransaction.flatMap(t -> {
 						Mono<Transaction> TransactionMono = Mono.empty();
@@ -67,9 +52,7 @@ public class TransactionServiceImpl implements TransactionService{
 
 	@Override
 	public Mono<Transaction> update(Transaction transaction) {
-		
 		Mono<Transaction> oTransaction = transactionRepository.findById(transaction.get_id());
-		
 		return oTransaction.flatMap( transactions -> {
 										transactions.setType(transaction.getType());
 										transactions.setAmount(transaction.getAmount());
@@ -78,10 +61,5 @@ public class TransactionServiceImpl implements TransactionService{
 			
 							);
 	}
-
-	/*@Override
-	public Mono<Account> actualizar(String id, Double balance) {
-		return accountClientRest.updateBalance(id, balance);
-	}*/
 
 }

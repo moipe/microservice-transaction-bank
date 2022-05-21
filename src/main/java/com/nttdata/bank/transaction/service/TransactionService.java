@@ -14,7 +14,5 @@ public interface TransactionService {
 	Mono<Transaction> save(Transaction transaction);
 	
 	Mono<Transaction> update(Transaction transaction);
-	
-	//Mono<Account> actualizar(String id, Double balance);
 
 }
