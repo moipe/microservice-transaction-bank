@@ -13,15 +13,30 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Document(value = "transactions")
-public class Transaction {
+@Document(value = "movements")
+public class Movement {
 	
 	@Id
 	private String _id;
 	
-	private String type;
+		/* CATEGORY */
+	//1 - Transacción
+	//2 - Transferencia
+	private Byte category;
+	
+		/* TYPE */
+	//1 - Depósito
+	//2 - Retiro
+	//3 - Transferencia
+	private Byte type;
+	
+	private String description;
 	
 	private Double amount;
+	
+	private String createAt;
+	
+	private String externalAccount;
 	
 	@JsonProperty(access = Access.WRITE_ONLY)
 	private String accountId;

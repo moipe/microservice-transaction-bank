@@ -1,5 +1,6 @@
 package com.nttdata.bank.transaction.client;
 
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -15,6 +16,8 @@ public interface AccountClientRest {
 	@PutMapping("/{id}")
 	public Mono<Account> updateBalance(@PathVariable String id, 
 										@RequestParam Double balance,
-										@RequestParam String type);
+										@RequestParam Byte type);
 
+	@GetMapping("/{id}")
+	public Mono<Account> findByid(@PathVariable String id);
 }
